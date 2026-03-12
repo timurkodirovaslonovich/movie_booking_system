@@ -9,9 +9,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue
-    private UUID uuid;
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private String name;
@@ -39,11 +38,11 @@ public class User {
     }
 
     public UUID getId() {
-        return this.uuid;
+        return this.id;
     }
 
     public void setId(UUID id) {
-        this.uuid = id;
+        this.id = id;
     }
 
     public String getName() {
