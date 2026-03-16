@@ -30,13 +30,12 @@ public class User {
 
     public User() {}
 
-    public User(String name, String email, String password, Role role) {
+    public User( String name, String email, Role role, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
     }
-
     public UUID getId() {
         return this.id;
     }
