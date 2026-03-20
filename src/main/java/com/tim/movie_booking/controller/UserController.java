@@ -54,4 +54,12 @@ class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
+
+    @PutMapping
+    @Operation(summary = "Updating user name or/and password")
+    ResponseEntity<UserResponseDto> updateUser(@Valid @RequestBody UserRequestDto request) {
+        var updatedUser = userService.updateUser(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(updatedUser);
+    }
+
 }

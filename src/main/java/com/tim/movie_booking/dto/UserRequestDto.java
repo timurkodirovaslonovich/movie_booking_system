@@ -5,6 +5,7 @@ import com.tim.movie_booking.entity.Role;
 import java.util.UUID;
 
 public class UserRequestDto {
+    private UUID id;
     private String name;
     private String email;
     private Role role;
@@ -13,14 +14,23 @@ public class UserRequestDto {
     public UserRequestDto() {
     }
 
-    public UserRequestDto(String name, String email, Role role, String password) {
-
+    public UserRequestDto(UUID id, String name, String email, Role role, String password) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.role = role;
         this.password = password;
 
     }
+
+    public  UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
 
     public String getPassword() {
         return password;

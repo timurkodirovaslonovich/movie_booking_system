@@ -57,7 +57,21 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public UserResponseDto updateUser(UserRequestDto request) {
+        if (userRepository.findById(request.getId()).isPresent()) {
+            User updatesUser = new User(
+                    request.getName(),
+                    request.getEmail(),
+                    request.getRole(),
+                    request.getPassword()
+            );
 
+            return toDto(userRepository.save(updatesUser));
+        } else {
+            throw new RuntimeException("User doesnot exist");
+        }
+    }
 
     /// mapping entity to response dtos
     @Override
