@@ -7,7 +7,6 @@ import com.tim.movie_booking.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,5 +60,6 @@ class UserController {
         var updatedUser = userService.updateUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedUser);
     }
+    
 
 }

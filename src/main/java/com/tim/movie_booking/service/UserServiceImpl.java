@@ -34,7 +34,8 @@ public class UserServiceImpl implements UserService {
     public List<UserResponseDto> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(this::toDto).toList();
+                .map(this::toDto)
+                .toList();
     }
 
 
