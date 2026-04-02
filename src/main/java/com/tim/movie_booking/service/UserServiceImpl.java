@@ -74,6 +74,19 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+    @Override
+    public void deleteUser(UUID uuid) {
+       if (userRepository.existsById(uuid)) {
+           userRepository.deleteById(uuid);
+       } else {
+           throw new RuntimeException("User not found");
+       }
+
+    }
+
+
+
     /// mapping entity to response dtos
     @Override
     public UserResponseDto toDto(User user) {

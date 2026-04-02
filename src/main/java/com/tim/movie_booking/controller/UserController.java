@@ -16,9 +16,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/admin/users")
 @Tag(name = "User", description = "User management APIs")
-class UserController {
+public class UserController {
 
     private final UserServiceImpl userService;
     //dependency injection with controller
@@ -60,6 +60,12 @@ class UserController {
         var updatedUser = userService.updateUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedUser);
     }
-    
+
+    @DeleteMapping("/{uuid}")
+    @Operation(summary = "Deleting user")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID uuid) {  // ✅ fixed return type
+        userService.deleteUser(uuid);
+        return ResponseEntity.noContent().build(); // ✅ proper 204 response
+    }
 
 }
