@@ -1,11 +1,12 @@
 package com.tim.movie_booking.controller;
 
+import com.tim.movie_booking.dto.UserRequestDto;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tim.movie_booking.dto.UserResponseDto;
 import com.tim.movie_booking.repository.UserRepository;
@@ -29,5 +30,13 @@ public class OwnUserController {
      ) {
         return ResponseEntity.ok(userService.toDto(currentUser));
      }
+
+
+    @PutMapping("/me")
+    public ResponseEntity<UserResponseDto> updateMyProfile(
+            @AuthenticationPrincipal User currentUser,
+            @Valid @RequestBody UserRequestDto request) {
+        return ResponseEntity.ok(userService.updateMe(currentUser, request));
+    }
 
 }

@@ -36,13 +36,9 @@ public class UserController {
     @GetMapping("/{id}")
     @Operation(summary = "getting user by ID")
     ResponseEntity<UserResponseDto> getUserById(@PathVariable UUID id) {
-        Optional<UserResponseDto> user = userService.getUserById(id);
+        UserResponseDto user = userService.getUserById(id);
 
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+       return ResponseEntity.ok(user);
     }
 
 

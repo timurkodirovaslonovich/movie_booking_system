@@ -4,7 +4,9 @@ package com.tim.movie_booking.service;
 import com.tim.movie_booking.dto.UserRequestDto;
 import com.tim.movie_booking.dto.UserResponseDto;
 import com.tim.movie_booking.entity.User;
+import com.tim.movie_booking.exception.ResourceNotFoundException;
 import com.tim.movie_booking.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,17 +17,19 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //dependency injection with constructor method
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //getting user based on the id
     @Override
-    public Optional<UserResponseDto> getUserById(UUID id) {
+    public UserResponseDto getUserById(UUID id) {
         return userRepository.findById(id)
-                .map(this::toDto);
+                .map(this::toDto).orElseThrow(()-> new ResourceNotFoundException("User not found with id: " + id));
     }
 
 
@@ -56,6 +60,26 @@ public class UserServiceImpl implements UserService {
             return toDto(savedUser);
         }
     }
+
+    @Override
+    public UserResponseDto updateMe(User currentUser, UserRequestDto request) {
+        // ✅ currentUser came from SecurityContext — it has the ID already
+        if (request.getName() != null && !request.getName().isBlank()) {
+            currentUser.setName(request.getName());
+        }
+
+        if (request.getEmail() != null && !request.getEmail().isBlank()) {
+            currentUser.setEmail(request.getEmail());
+        }
+
+        if (request.getPassword() != null && !request.getPassword().isBlank()) {
+            currentUser.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
+        User saved = userRepository.save(currentUser); // ✅ has ID → UPDATE
+        return toDto(saved);
+    }
+
 
 
     @Override

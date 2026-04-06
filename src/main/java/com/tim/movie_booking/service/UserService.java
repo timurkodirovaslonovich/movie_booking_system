@@ -5,16 +5,16 @@ import com.tim.movie_booking.dto.UserResponseDto;
 import com.tim.movie_booking.entity.User;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface UserService {
-    Optional<UserResponseDto> getUserById(UUID id);
+    UserResponseDto getUserById(UUID id);
     List<UserResponseDto> getAllUsers();
 
     UserResponseDto createUser(UserRequestDto request);
 
     UserResponseDto updateUser(UserRequestDto request);
+    UserResponseDto updateMe(User currentUser, UserRequestDto request);
 
     void deleteUser(UUID uuid);
 
