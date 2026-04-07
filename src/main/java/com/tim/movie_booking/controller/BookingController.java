@@ -58,10 +58,10 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.cancelBooking(id, currentUser));
     }
 
-    @GetMapping("/admin/all")
-    @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Get all bookings — admin only")
-    public ResponseEntity<List<BookingResponseDto>> getAllBookings() {
-        return ResponseEntity.ok(bookingService.getAllBookings());
-    }
+//    @GetMapping("/admin/all")
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @Operation(summary = "Get all bookings — admin only")
+//    public ResponseEntity<List<BookingResponseDto>> getAllBookings() {
+//        return ResponseEntity.ok(bookingService.getAllBookings());
+//    }
 }

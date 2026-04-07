@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/movies/**").permitAll()
 
 
+
                         // Admin-only routes
                         // ✅ Explicitly cover all HTTP methods for admin
                         .requestMatchers(HttpMethod.GET, "/api/admin/**").hasRole("ADMIN")
