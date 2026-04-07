@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface SeatRepository extends JpaRepository<Seat, UUID> {
     List<Seat> findByHallId(UUID hallId);
-    List<Seat> findByHallIdAndStatus(UUID hallId, SeatStatus status);
+    List<Seat> findByHallIdAndSeatStatus(UUID hallId, SeatStatus seatStatus);
 }
