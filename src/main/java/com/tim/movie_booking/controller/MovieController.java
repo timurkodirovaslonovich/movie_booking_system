@@ -24,15 +24,6 @@ public class MovieController {
 
     private final MovieService movieService;
 
-    //admin
-//    @GetMapping("/admin/all")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @Operation(summary = "get all bookings")
-//    public ResponseEntity<List<MovieResponseDto>> getAllMovies() {
-//        return ResponseEntity.ok(movieService.getAllMovies());
-//    }
-
-
 
 
 

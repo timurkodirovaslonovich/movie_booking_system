@@ -1,16 +1,17 @@
 package com.tim.movie_booking.controller;
 
 
-import com.tim.movie_booking.dto.BookingResponseDto;
-import com.tim.movie_booking.dto.UserRequestDto;
-import com.tim.movie_booking.dto.UserResponseDto;
+import com.tim.movie_booking.dto.*;
+import com.tim.movie_booking.entity.User;
 import com.tim.movie_booking.service.BookingService;
+import com.tim.movie_booking.service.MovieService;
 import com.tim.movie_booking.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
@@ -19,15 +20,19 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/admin")
-@Tag(name = "User", description = "User management APIs")
+@Tag(name = "admin", description = "Admin management APIs")
 public class AdminController {
 
     private final UserServiceImpl userService;
     private final BookingService bookingService;
+    private final MovieService movieService;
+
+
     //dependency injection with controller
-    public AdminController(UserServiceImpl userService, BookingService bookingService) {
+    public AdminController(UserServiceImpl userService, BookingService bookingService, MovieService movieService) {
         this.userService = userService;
         this.bookingService = bookingService;
+        this.movieService = movieService;
     }
 
     @GetMapping("/users")
@@ -67,6 +72,41 @@ public class AdminController {
         userService.deleteUser(uuid);
         return ResponseEntity.noContent().build(); // ✅ proper 204 response
     }
+
+
+    @PostMapping("/movies")
+    @Operation(summary = "Create movie")
+    public ResponseEntity<MovieResponseDto> createMovie(
+            @AuthenticationPrincipal User currentUser,
+            @Valid @RequestBody MovieRequestDto request) {
+
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(movieService.createMovie(currentUser, request));
+
+    }
+
+
+    @PutMapping("/movies/{uuid}")
+    @Operation(summary = "updating movie")
+    ResponseEntity<MovieResponseDto> updateMovie(
+            @PathVariable UUID uuid,
+            @Valid @RequestBody MovieRequestDto request,
+            @AuthenticationPrincipal User currentUser)
+    {
+        return ResponseEntity.ok(movieService.updateMovie(uuid, request, currentUser));
+    }
+
+
+    @DeleteMapping("/movies/{uuid}")
+    @Operation(summary = "deleting movie")
+    ResponseEntity<Void> deleteMovie(@PathVariable UUID uuid) {
+        movieService.deleteMovie(uuid);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
     @GetMapping("/bookings")

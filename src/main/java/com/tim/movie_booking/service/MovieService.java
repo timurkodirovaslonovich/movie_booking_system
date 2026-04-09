@@ -11,4 +11,6 @@ public interface MovieService {
     List<MovieResponseDto> getAllMovies(); //only Admin
     MovieResponseDto createMovie(User currentUser, MovieRequestDto request); //only admin
     MovieResponseDto getMovieById(UUID uuid);
+    MovieResponseDto updateMovie(UUID uuid, MovieRequestDto request, User currentUser);
+    void deleteMovie(UUID uuid);
 }

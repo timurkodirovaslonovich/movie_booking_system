@@ -25,12 +25,18 @@ server:
     include-binding-errors: always
     include-stacktrace: on_param
 
+
+
+
 # ✅ Add this — JwtUtil needs it
 jwt:
   secret: my-super-secret-key-for-movie-booking-app-32chars
 logging:
   level:
     org.springframework.security: DEBUG
+
+
+
 springdoc:
   api-docs:
     enabled: true

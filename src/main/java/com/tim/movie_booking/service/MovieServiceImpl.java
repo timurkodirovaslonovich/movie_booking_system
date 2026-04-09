@@ -32,14 +32,18 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieResponseDto createMovie(User currentUser, MovieRequestDto request) {
+
+        //check for admin
         if (currentUser.getRole() != Role.ADMIN) {
             throw new ResourceNotFoundException("You are not admin");
         }
 
+        //check for request.name
         if (request.getMovieName() == null) {
             throw new IllegalArgumentException("Movie name can not be empty");
         }
 
+        //check for request.description
         if (request.getDescription() == null){
             throw new IllegalArgumentException("Movie description can not be empty");
         }
@@ -59,6 +63,35 @@ public class MovieServiceImpl implements MovieService {
                 new ResourceNotFoundException("Movie not found with id: " + uuid));
 
         return toDto(foundMovie);
+    }
+
+    @Override
+    public MovieResponseDto updateMovie(UUID uuid, MovieRequestDto request, User currentUser) {
+        if (currentUser.getRole() != Role.ADMIN) {
+            throw new ResourceNotFoundException("You are not admin");
+        }
+
+        if (request.getDescription().isEmpty() & request.getMovieName().isEmpty()) {
+            throw new ResourceNotFoundException("request body can't be empty");
+        }
+
+        Movie movie = movieRepository.findById(uuid).orElseThrow(() ->
+                new ResourceNotFoundException("Movie nopt found with id: " + uuid));
+
+        movie.setMovieName(request.getMovieName());
+        movie.setDescription(request.getDescription());
+
+        return toDto(movie);
+    }
+
+
+    @Override
+    public void deleteMovie(UUID uuid) {
+        if (movieRepository.existsById(uuid)) {
+            movieRepository.deleteById(uuid);
+        } else {
+            throw new RuntimeException("Movie not found");
+        }
     }
 
     //Mapper
