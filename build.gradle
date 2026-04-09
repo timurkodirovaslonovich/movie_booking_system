@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.tim'
 version = '0.0.1-SNAPSHOT'
-description = 'Demo project for Spring Boot'
+description = 'Movie booking system'
 
 java {
 	toolchain {
