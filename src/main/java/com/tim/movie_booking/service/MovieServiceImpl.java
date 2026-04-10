@@ -10,13 +10,16 @@ import com.tim.movie_booking.exception.ResourceNotFoundException;
 import com.tim.movie_booking.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
+
+
 
 @Service
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
+
+
     private final MovieRepository movieRepository;
 
 
@@ -94,7 +97,7 @@ public class MovieServiceImpl implements MovieService {
         }
     }
 
-    //Mapper
+    //Mapper functions
     public MovieResponseDto toDto(Movie movie) {
         MovieResponseDto dto = new MovieResponseDto();
         dto.setUuid(movie.getId());
