@@ -4,6 +4,7 @@ package com.tim.movie_booking.controller;
 import com.tim.movie_booking.dto.*;
 import com.tim.movie_booking.entity.User;
 import com.tim.movie_booking.service.BookingService;
+import com.tim.movie_booking.service.CinemaService;
 import com.tim.movie_booking.service.MovieService;
 import com.tim.movie_booking.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,13 +27,18 @@ public class AdminController {
     private final UserServiceImpl userService;
     private final BookingService bookingService;
     private final MovieService movieService;
+    private final CinemaService cinemaService;
 
 
     //dependency injection with controller
-    public AdminController(UserServiceImpl userService, BookingService bookingService, MovieService movieService) {
+    public AdminController(UserServiceImpl userService,
+                           BookingService bookingService,
+                           MovieService movieService,
+                           CinemaService cinemaService) {
         this.userService = userService;
         this.bookingService = bookingService;
         this.movieService = movieService;
+        this.cinemaService = cinemaService;
     }
 
     @GetMapping("/users")
@@ -113,6 +119,17 @@ public class AdminController {
     @Operation(summary = "Get all bookings — admin only")
     public ResponseEntity<List<BookingResponseDto>> getAllBookings() {
         return ResponseEntity.ok(bookingService.getAllBookings());
+    }
+
+
+    @GetMapping("/cinemas")
+    @Operation(summary = "posting new cinema")
+    public ResponseEntity<CinemaResponseDto> createCinema(
+            @Valid @RequestBody CinemaRequestDto request) {
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(cinemaService.createCinema(request));
+
     }
 
 }

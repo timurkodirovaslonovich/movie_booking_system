@@ -10,6 +10,6 @@ public interface CinemaService {
     CinemaResponseDto getCinemaById(UUID uuid);
     List<CinemaResponseDto> getCinemas();
     CinemaResponseDto createCinema(CinemaRequestDto request);
-    CinemaResponseDto updateCinema(CinemaRequestDto request);
+    CinemaResponseDto updateCinema(CinemaRequestDto request, UUID uuid);
     void deleteCinema(UUID uuid);
 }
