@@ -58,7 +58,7 @@ public class AdminController {
 
 
     @PostMapping("/users")
-    @Operation(summary = "postign a user")
+    @Operation(summary = "posting a user")
     ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto request ) {
         var user = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);

@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
 
             return toDto(userRepository.save(updatesUser));
         } else {
-            throw new RuntimeException("User doesnot exist");
+            throw new RuntimeException("User does not exist");
         }
     }
 

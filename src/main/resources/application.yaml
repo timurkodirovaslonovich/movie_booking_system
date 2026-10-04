@@ -30,6 +30,7 @@ server:
 
 # ✅ Add this — JwtUtil needs it
 jwt:
+  expiration: 3600000
   secret: my-super-secret-key-for-movie-booking-app-32chars
 logging:
   level:
